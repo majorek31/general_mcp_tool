@@ -1,5 +1,4 @@
-Weather Data for Cieszyn
--------------------------
-Date: Current
-Condition: Sunny ☀️
-Temperature: 25°C (77°F)
+Weather Data for Cieszyn:
+- Condition: Sunny ☀️
+- Temperature: 25°C 🌡️
+- Date: Current

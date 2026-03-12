@@ -9,7 +9,7 @@ class SolverAgent:
     def __init__(self):
         self.model = ChatOpenAI(
             model="qwen3.5:4b",
-            temperature=0,
+            temperature=0.7,
             base_url="http://host.docker.internal:11434/v1",
             max_completion_tokens=100,
             api_key="test",  # type: ignore
@@ -34,5 +34,6 @@ class SolverAgent:
                 ]
             }
         )
+        print(result)
         last_message = result["messages"][-1]
         return last_message.content

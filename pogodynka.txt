@@ -1,0 +1,13 @@
+---
+
+**Raport Pogodowy**
+
+| Element | Dane |
+|---------|------|
+| Miasto | Cieszyn |
+| Stan | Słonecznie |
+| Temperatura | 25°C (77°F) |
+
+---
+
+Dziś w Cieszynie mamy piękny, słoneczny dzień. Świetna pogoda na spacer lub aktywną działalność! 🌞
