@@ -2,11 +2,9 @@ from langchain.agents import create_agent
 from langchain.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 
-from tools.tools import get_current_weather, save_to_file
-
 
 class SolverAgent:
-    def __init__(self):
+    def __init__(self, tools=None):
         self.model = ChatOpenAI(
             model="qwen3:4b-instruct",
             temperature=0,
@@ -16,17 +14,19 @@ class SolverAgent:
         )
         self.prompt = self._load_prompt()
 
+        self.agent = create_agent(
+            model=self.model,
+            system_prompt=SystemMessage(content=self.prompt),
+            tools=tools,
+        )
+
     def _load_prompt(self):
         with open("src/prompts/solver_prompt.txt") as f:
             return f.read()
 
     def solve(self, problem: str, context: str) -> str:
-        agent = create_agent(
-            model=self.model,
-            system_prompt=SystemMessage(content=self.prompt),
-            tools=[get_current_weather, save_to_file],
-        )
-        result = agent.invoke(
+
+        result = self.agent.invoke(
             {
                 "messages": [
                     SystemMessage(content=context),
