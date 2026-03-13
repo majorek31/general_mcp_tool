@@ -1,29 +1,29 @@
-import uvicorn
-from fastmcp import FastMCP
-from fastmcp.server.http import create_streamable_http_app
+import sys
 
 from workflow.workflow import run_workflow
 
-server = FastMCP()
+# server = FastMCP()
 
 #
 # PRMPT -> PLANNER -> STEPS -> SOLVER (rozwiazuje, SKIP_STEP) -> REPLANNING
 # REPLANNING -> PLANNER -> STEPS -> SOLVER (rozwiazuje, SKIP_STEP) -> REPLANNING
 #
+print(run_workflow("Generate a random string and save it to random.md"))
 
 print("Starting server...")
+sys.exit()
 
 
-@server.tool("general_solver")
-def general_solver(problem: str) -> str:
-    """A general problem solver that uses a planner agent to break down the problem into steps and a solver agent to solve each step."""
-    return run_workflow(problem)
+# @server.tool("general_solver")
+# def general_solver(problem: str) -> str:
+#     """A general problem solver that uses a planner agent to break down the problem into steps and a solver agent to solve each step."""
+#     return run_workflow(problem)
 
 
-app = create_streamable_http_app(server, "/mcp")
-uvicorn.run(app, host="0.0.0.0", port=8000)
+# app = create_streamable_http_app(server, "/mcp")
+# uvicorn.run(app, host="0.0.0.0", port=8000)
 
-# asyncio.run(server.run_http_async(host="0.0.0.0", transport="http"))
+# # asyncio.run(server.run_http_async(host="0.0.0.0", transport="http"))
 
 
 # async def main():

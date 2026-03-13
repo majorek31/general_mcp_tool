@@ -4,6 +4,7 @@ from langgraph.graph import END, StateGraph
 
 from agents.planner_agent import PlannerAgent
 from agents.solver_agent import SolverAgent
+from tools import tool_discovery_service
 
 
 class AgentState(TypedDict):
@@ -16,6 +17,7 @@ class AgentState(TypedDict):
 
 def planner_node(state: AgentState):
     planner = PlannerAgent()
+    print("Planning for goal:", state["goal"])
     result = planner.plan(state["goal"])
     print("Planner result:", result.steps)
     return {
@@ -26,10 +28,12 @@ def planner_node(state: AgentState):
 
 
 def solver_node(state: AgentState):
-    solver = SolverAgent()
     steps = state["steps"]
     step_index = state["step_index"]
     step = steps[step_index]
+    tools = tool_discovery_service.tool_discovery_service.get_all_tool_objects()
+    # print(f"Solving step {step_index + 1}/{len(steps)}: {step} with tools: {tools.va}")
+    solver = SolverAgent(tools=tools)
     context = "\n".join(
         [f"Step {idx}: {output}" for idx, output in state["task_results"].items()]
     )
@@ -37,7 +41,6 @@ def solver_node(state: AgentState):
     task_results = state["task_results"]
 
     task_results[step_index + 1] = result
-    print(f"Solver result for step {step_index}:", result)
     return {
         "task_results": task_results,
         "step_index": step_index + 1,
