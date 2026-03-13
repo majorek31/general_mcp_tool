@@ -1,27 +1,44 @@
-import sys
+import uvicorn
+from fastmcp import FastMCP
+from fastmcp.server.http import create_streamable_http_app
 
+from tools import tool_discovery_service
 from workflow.workflow import run_workflow
 
-# server = FastMCP()
+server = FastMCP()
 
 #
 # PRMPT -> PLANNER -> STEPS -> SOLVER (rozwiazuje, SKIP_STEP) -> REPLANNING
 # REPLANNING -> PLANNER -> STEPS -> SOLVER (rozwiazuje, SKIP_STEP) -> REPLANNING
 #
-print(run_workflow("Generate a random string and save it to random.md"))
+# print(run_workflow("Generate a random string and save it to random.md"))
 
 print("Starting server...")
-sys.exit()
+# sys.exit()
+
+tools = tool_discovery_service.tool_discovery_service.get_all_tool_objects()
 
 
-# @server.tool("general_solver")
-# def general_solver(problem: str) -> str:
-#     """A general problem solver that uses a planner agent to break down the problem into steps and a solver agent to solve each step."""
-#     return run_workflow(problem)
+@server.tool("general_solver")
+def general_solver(problem: str) -> str:
+    """A general problem solver that can solve a wide range of problems by planning and executing steps."""
+    return run_workflow(problem)
 
 
-# app = create_streamable_http_app(server, "/mcp")
-# uvicorn.run(app, host="0.0.0.0", port=8000)
+@server.tool("list_tools")
+def list_tools() -> str:
+    """List all tools that can be accessed through general_solver"""
+    return "\n".join([f"{tool.name}: {tool.description}" for tool in tools])
+
+
+@server.prompt("solve")
+def solve(problem: str) -> str:
+    """A prompt that uses the general_solver tool to solve a problem."""
+    return f"Call general_solver with ({problem})"
+
+
+app = create_streamable_http_app(server, "/mcp")
+uvicorn.run(app, host="0.0.0.0", port=8000)
 
 # # asyncio.run(server.run_http_async(host="0.0.0.0", transport="http"))
 

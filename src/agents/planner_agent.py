@@ -11,7 +11,8 @@ class PlannerAgent:
             model="qwen3:4b-instruct",
             temperature=0,
             base_url="http://172.27.80.1:11434/v1",
-            api_key="test",  # type: ignore
+            api_key="test",  # type: ignore,
+            frequency_penalty=0.5,
         )
         self.prompt = self._load_prompt()
         self.agent = create_agent(
@@ -33,4 +34,5 @@ class PlannerAgent:
                 ]
             }
         )
+        print("Planner raw result:", result)
         return result["structured_response"]
