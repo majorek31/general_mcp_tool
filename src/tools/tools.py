@@ -4,14 +4,11 @@ from langchain.tools import tool
 @tool
 def get_location() -> str:
     """Get the current location"""
-    # For the sake of this example, we'll return a dummy location.
     return "Cieszyn, Poland"
-
 
 @tool
 def get_current_weather(location: str) -> str:
     """Get the current weather in a given location"""
-    # For the sake of this example, we'll return a dummy weather report.
     return f"The current weather in {location} is sunny with a temperature of 25°C."
 
 @tool
@@ -46,7 +43,6 @@ def generate_random_number(start: int, end: int) -> int:
 @tool
 def translate_text(text: str, target_language: str) -> str:
     """Translate the given text to the target language"""
-    # For the sake of this example, we'll return a dummy translation.
     return f"Translated '{text}' to {target_language}"
 
 @tool
@@ -62,7 +58,6 @@ def fetch_data_from_api(url: str) -> str:
 @tool
 def summarize_text(text: str) -> str:
     """Summarize the given text"""
-    # For the sake of this example, we'll return a dummy summary.
     return f"Summary of the text: {text[:50]}..."
 
 @tool
