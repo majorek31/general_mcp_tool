@@ -8,9 +8,9 @@ from schemas.step import PlannedTask
 class PlannerAgent:
     def __init__(self):
         self.model = ChatOpenAI(
-            model="qwen3.5:4b",
+            model="qwen3:4b-instruct",
             temperature=0,
-            base_url="http://host.docker.internal:11434/v1",
+            base_url="http://172.27.80.1:11434/v1",
             api_key="test",  # type: ignore
         )
         self.prompt = self._load_prompt()

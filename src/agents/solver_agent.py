@@ -8,9 +8,9 @@ from tools.tools import get_current_weather, save_to_file
 class SolverAgent:
     def __init__(self):
         self.model = ChatOpenAI(
-            model="qwen3.5:4b",
+            model="qwen3:4b-instruct",
             temperature=0.7,
-            base_url="http://host.docker.internal:11434/v1",
+            base_url="http://172.27.80.1:11434/v1",
             max_completion_tokens=100,
             api_key="test",  # type: ignore
         )
@@ -34,6 +34,5 @@ class SolverAgent:
                 ]
             }
         )
-        print(result)
         last_message = result["messages"][-1]
         return last_message.content

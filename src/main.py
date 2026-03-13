@@ -12,9 +12,11 @@ server = FastMCP()
 async def general_solver(problem: str) -> str:
     """A general problem solver that uses a planner agent to break down the problem into steps and a solver agent to solve each step."""
     planner = PlannerAgent()
+
+    solver = SolverAgent()
     result = await planner.plan(problem)
     # print the result in a human readable format with indexes
-    solver = SolverAgent()
+
     task_results: dict[int, str] = {}
     for i, step in enumerate(result.steps, start=1):
         context = "\n".join(
@@ -31,6 +33,7 @@ app = create_streamable_http_app(server, "/mcp")
 uvicorn.run(app, host="0.0.0.0", port=8000)
 
 # asyncio.run(server.run_http_async(host="0.0.0.0", transport="http"))
+
 
 # async def main():
 #     planner = PlannerAgent()
@@ -49,5 +52,7 @@ uvicorn.run(app, host="0.0.0.0", port=8000)
 #         task_results[i] = await solver.solve(step.description, context)
 #         print(f"Result for step {i}: {task_results[i]}")
 
+
+# import asyncio
 
 # asyncio.run(main())
