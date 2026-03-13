@@ -2,31 +2,22 @@ import uvicorn
 from fastmcp import FastMCP
 from fastmcp.server.http import create_streamable_http_app
 
-from agents.planner_agent import PlannerAgent
-from agents.solver_agent import SolverAgent
+from workflow.workflow import run_workflow
 
 server = FastMCP()
 
+#
+# PRMPT -> PLANNER -> STEPS -> SOLVER (rozwiazuje, SKIP_STEP) -> REPLANNING
+# REPLANNING -> PLANNER -> STEPS -> SOLVER (rozwiazuje, SKIP_STEP) -> REPLANNING
+#
+
+print("Starting server...")
+
 
 @server.tool("general_solver")
-async def general_solver(problem: str) -> str:
+def general_solver(problem: str) -> str:
     """A general problem solver that uses a planner agent to break down the problem into steps and a solver agent to solve each step."""
-    planner = PlannerAgent()
-
-    solver = SolverAgent()
-    result = await planner.plan(problem)
-    # print the result in a human readable format with indexes
-
-    task_results: dict[int, str] = {}
-    for i, step in enumerate(result.steps, start=1):
-        context = "\n".join(
-            [f"Step {idx}: {output}" for idx, output in task_results.items()]
-        )
-        print(f"Solving step {i}: {step.description}")
-        task_results[i] = await solver.solve(step.description, context)
-        print(f"Result for step {i}: {task_results[i]}")
-
-    return task_results[len(result.steps)]
+    return run_workflow(problem)
 
 
 app = create_streamable_http_app(server, "/mcp")

@@ -2,6 +2,13 @@ from langchain.tools import tool
 
 
 @tool
+def get_location() -> str:
+    """Get the current location"""
+    # For the sake of this example, we'll return a dummy location.
+    return "Cieszyn, Poland"
+
+
+@tool
 def get_current_weather(location: str) -> str:
     """Get the current weather in a given location"""
     # For the sake of this example, we'll return a dummy weather report.

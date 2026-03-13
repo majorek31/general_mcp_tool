@@ -25,8 +25,8 @@ class PlannerAgent:
         with open("src/prompts/planner_prompt.txt") as f:
             return f.read()
 
-    async def plan(self, task: str) -> PlannedTask:
-        result = await self.agent.ainvoke(
+    def plan(self, task: str) -> PlannedTask:
+        result = self.agent.invoke(
             {
                 "messages": [
                     HumanMessage(content=task),

@@ -9,7 +9,7 @@ class SolverAgent:
     def __init__(self):
         self.model = ChatOpenAI(
             model="qwen3:4b-instruct",
-            temperature=0.7,
+            temperature=0,
             base_url="http://172.27.80.1:11434/v1",
             max_completion_tokens=100,
             api_key="test",  # type: ignore
@@ -20,13 +20,13 @@ class SolverAgent:
         with open("src/prompts/solver_prompt.txt") as f:
             return f.read()
 
-    async def solve(self, problem: str, context: str):
+    def solve(self, problem: str, context: str) -> str:
         agent = create_agent(
             model=self.model,
             system_prompt=SystemMessage(content=self.prompt),
             tools=[get_current_weather, save_to_file],
         )
-        result = await agent.ainvoke(
+        result = agent.invoke(
             {
                 "messages": [
                     SystemMessage(content=context),
