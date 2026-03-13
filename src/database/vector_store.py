@@ -1,4 +1,3 @@
-from langchain_core.documents import Document
 from langchain_ollama import OllamaEmbeddings
 from langchain_postgres import PGVector
 
@@ -12,11 +11,3 @@ vector_store = PGVector(
     collection_name="my_docs",
     connection="postgresql+psycopg://postgres:postgres@localhost:5432/postgres",
 )
-
-
-vector_store.add_documents(
-    documents=[Document(page_content="Hello world", metadata={"source": "test.txt"})]
-)
-
-results = vector_store.similarity_search("Hello", k=1)
-print(results)

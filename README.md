@@ -1,3 +1,15 @@
+# Installation
+
+before connecting please uncomment lines 20-27 in tool_discovery_service.py
+
+after first run, comment them back and start the program
+
+this is made for now to simplyfy pgvector and not add redundant embeddings.
+
+After that run program as is.
+
+via py ./src/main.py
+
 # 13.03.2026
 ## Problems
 ### `get weather for cieszyn`

@@ -19,7 +19,7 @@ def planner_node(state: AgentState):
     planner = PlannerAgent()
     print("Planning for goal:", state["goal"])
     result = planner.plan(state["goal"])
-    print("Planner result:", result.steps)
+    # print("Planner result:", result.steps)
     return {
         "steps": [step.description for step in result.steps],
         "step_index": 0,
@@ -31,8 +31,8 @@ def solver_node(state: AgentState):
     steps = state["steps"]
     step_index = state["step_index"]
     step = steps[step_index]
-    tools = tool_discovery_service.tool_discovery_service.get_all_tool_objects()
-    # print(f"Solving step {step_index + 1}/{len(steps)}: {step} with tools: {tools.va}")
+    tools = tool_discovery_service.tool_discovery_service.get_top_k_tools(step)
+    print(f"Solving step {step_index + 1}/{len(steps)}: {step} with tools: {tools}")
     solver = SolverAgent(tools=tools)
     context = "\n".join(
         [f"Step {idx}: {output}" for idx, output in state["task_results"].items()]
