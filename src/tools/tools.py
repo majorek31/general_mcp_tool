@@ -24,6 +24,17 @@ def save_to_file(filename: str, content: str) -> str:
 
 
 @tool
+def read_from_file(filename: str) -> str:
+    """Read the content from a file with the specified filename"""
+    try:
+        with open(filename, "r") as f:
+            content = f.read()
+        return content
+    except FileNotFoundError:
+        return f"File {filename} not found."
+
+
+@tool
 def calculate_sum(a: int, b: int) -> int:
     """Calculate the sum of two integers"""
     return a + b

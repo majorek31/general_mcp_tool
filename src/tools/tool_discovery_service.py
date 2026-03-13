@@ -23,20 +23,15 @@ class ToolDiscoveryService:
         self.tools[tool.name] = tool
 
     def list_tools(self):
-        """
-        Returns a human-readable list of tools:
-        [{'name': ..., 'description': ...}, ...]
-        """
+
         return [
             {"name": t.name, "description": t.description} for t in self.tools.values()
         ]
 
     def get_tool_by_name(self, name: str):
-        """Retrieve a Tool object by name"""
         return self.tools.get(name, None)
 
     def get_all_tool_objects(self):
-        """Returns all Tool objects (ready to pass to create_agent)"""
         return list(self.tools.values())
 
 

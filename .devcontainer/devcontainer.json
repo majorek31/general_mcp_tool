@@ -6,7 +6,7 @@
   "remoteUser": "vscode",
   "features": {
 	"ghcr.io/devcontainers-extra/features/uv:1": {},
-	"ghcr.io/itsmechlark/features/postgresql:1": {}
+  "ghcr.io/devcontainers/features/docker-in-docker": {}
   },
   "customizations": {
     "vscode": {
@@ -15,7 +15,9 @@
         "ms-python.vscode-pylance",
         "charliermarsh.ruff",
         "ms-python.mypy-type-checker",
-        "ms-toolsai.jupyter"
+        "ms-toolsai.jupyter",
+        "ms-azuretools.vscode-containers",
+        "ms-ossdata.vscode-pgsql"
       ]
     }
   },
